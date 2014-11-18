@@ -11,6 +11,23 @@ module Myob
           @next_page_link  = nil
         end
 
+        ########
+
+
+        def toto(query = nil)
+          toto_request(self.url, query)
+        end
+
+        def toto_request(url, query = nil)
+          url = url + query
+          model_data = parse_response(@client.connection.get(url, {:headers => @client.headers}))
+          @next_page_link = model_data['NextPageLink'] if self.model_route != ''
+          
+          model_data
+        end
+
+        ########
+
         def model_route
           @model_name.to_s
         end
